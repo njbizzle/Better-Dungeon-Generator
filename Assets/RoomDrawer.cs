@@ -28,7 +28,6 @@ public class RoomDrawer : MonoBehaviour
 
     void Update()
     {
-        
     }
 
     public void PlaceRoomObjectTiles(RoomObject room){
@@ -64,13 +63,7 @@ public class RoomDrawer : MonoBehaviour
         foreach (List<Vector3Int> wallPosList in wallPoeses2d){ // iterate though the differnt lists of wall tile positions
 
             if (wallPosList.Count % 2 == 0){ // if the remainder of wallPosList/2 is not 0 (its even)
-                //Debug.Log(wallPosList); // this should not happen
-                // string temp = "";
-                // foreach (Vector3Int vec in wallPosList){
-                //     temp = "";
-                //     temp+= vec.ToString();
-                // }
-                // Debug.Log(temp);
+                Debug.Log("there is a problem"); // this should not happen
             }
 
             else if (wallStatuses[wallIndex] == RoomObject.WallStatus.closed){ // if the wall is closed
@@ -98,7 +91,7 @@ public class RoomDrawer : MonoBehaviour
                 BulkPlace(wallPosList); // place the updated list
             }
             else {
-                Debug.Log(wallStatuses[wallIndex] + " yeet " + RoomObject.WallStatus.closed); // this should not happen
+                Debug.Log("there is a problem"); // this should not happen
             }
             wallIndex++; // add 1 to the index (at the end of the loop)
         }
