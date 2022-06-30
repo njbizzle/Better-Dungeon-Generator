@@ -697,7 +697,7 @@ MonoBehaviour:
   borderTilemap: {fileID: 355778381}
   insideTilemap: {fileID: 153096812}
   borderTile: {fileID: 11400000, guid: 721c620d2ab450a498efb7454f6a4803, type: 2}
-  insideTile: {fileID: 11400000, guid: 8ce71b408ffca394c94cfe34ad329af4, type: 2}
+  insideTile: {fileID: 11400000, guid: eda2ebbed9ff09c49983c39b0f317ba9, type: 2}
   roomDiameter: 5
   doorDiameter: 1
   gridLayout: {fileID: 936919744}
@@ -753,7 +753,7 @@ MonoBehaviour:
   topRightCorner: 1
   bottomLeftCorner: 1
   bottomRightCorner: 1
-  drawRoom: 0
+  drawRoom: 1
   roomDrawer: {fileID: 0}
 --- !u!4 &2083179008
 Transform:
