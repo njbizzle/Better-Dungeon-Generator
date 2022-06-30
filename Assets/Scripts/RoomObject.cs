@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RoomObject : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class RoomObject : MonoBehaviour
 
     [Header("Draw/Redraw Room")]
     [SerializeField] bool drawRoom; // when true will draw the room using room drawer
+
+    [Header("Tile Drawn")]
+    [SerializeField] List<Vector3Int> tilePoints; // stores postions of all tiles associated with the room
 
     // references
     [Header("References")]
@@ -62,5 +66,20 @@ public class RoomObject : MonoBehaviour
             Mathf.RoundToInt(transform.position.z));
 
         return postionInt; // returns created vector3int 
+    }
+    public List<Vector3Int> GetTilePoints(){
+        return tilePoints;
+    }
+
+    public void AddTileToList(Vector3Int tilePos){
+        tilePoints.Add(tilePos);
+    }
+    
+    public void RemoveTileFromList(Vector3Int tilePos){
+        tilePoints.Remove(tilePos);
+    }
+    
+    public void RemoveTilesFromList(List<Vector3Int> tilePoses){
+        tilePoints = tilePoints.Except(tilePoses).ToList();
     }
 }

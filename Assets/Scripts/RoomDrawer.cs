@@ -54,6 +54,8 @@ public class RoomDrawer : MonoBehaviour
         wallLength = roomDiameter*2+1; // wall length
         doorLength = doorDiameter*2+1; // door length
 
+        DeleteTiles(room.GetTilePoints(), room); // clear room tiles
+
         // --place tiles--
 
         List<List<Vector3Int>> wallPoeses2d = PlaceWall(roomPosInGridCells); // get a 2d list of the differnt positions for the wall tiles
@@ -67,13 +69,13 @@ public class RoomDrawer : MonoBehaviour
             }
 
             else if (wallStatuses[wallIndex] == RoomObject.WallStatus.closed){ // if the wall is closed
-                BulkPlace(wallPosList); // call bulk place with the list for the walls
+                BulkPlace(wallPosList, room); // call bulk place with the list for the walls
             }
             else if (wallStatuses[wallIndex] == RoomObject.WallStatus.open){ // if the wall is closed
                 wallPosList.RemoveAt(0); // remove the corners, or the first and last tiles, from the list
                 wallPosList.RemoveAt(wallPosList.Count - 1); // same as above but adjust for indexes starting at 0 
 
-                BulkPlace(wallPosList, null, null); // if open make sure there are no tiles, pass in null for border and inside tile
+                DeleteTiles(wallPosList, room); // if open make sure there are no tiles, pass in null for border and inside tile
             }
             else if (wallStatuses[wallIndex] == RoomObject.WallStatus.door){ // if the wall is closed
                 
@@ -86,9 +88,9 @@ public class RoomDrawer : MonoBehaviour
                 }
 
                 foreach (Vector3Int doorPos in doorPoses){ // go though all the door tiles postions
-                    DeleteTile(doorPos); // delete the door tile
+                    DeleteTile(doorPos, room); // delete the door tile
                 }
-                BulkPlace(wallPosList); // place the updated list
+                BulkPlace(wallPosList, room); // place the updated list
             }
             else {
                 Debug.Log("there is a problem"); // this should not happen
@@ -102,25 +104,25 @@ public class RoomDrawer : MonoBehaviour
             DeleteTile(new Vector3Int(
                 roomPosInGridCells.x - roomDiameter, 
                 roomPosInGridCells.y + roomDiameter, 
-                roomPosInGridCells.z)); // replace it with nothing
+                roomPosInGridCells.z), room); // replace it with nothing
         }
         if(!roomTopRightCorner){ // if the corner shouldn't be there
             DeleteTile(new Vector3Int(
                 roomPosInGridCells.x + roomDiameter, 
                 roomPosInGridCells.y + roomDiameter, 
-                roomPosInGridCells.z)); // replace it with nothing
+                roomPosInGridCells.z), room); // replace it with nothing
         }
         if(!roomBottomLeftCorner){ // if the corner shouldn't be there
             DeleteTile(new Vector3Int(
                 roomPosInGridCells.x - roomDiameter, 
                 roomPosInGridCells.y - roomDiameter, 
-                roomPosInGridCells.z)); // replace it with nothing
+                roomPosInGridCells.z), room); // replace it with nothing
         }
         if(!roomBottomRightCorner){ // if the corner shouldn't be there
             DeleteTile(new Vector3Int(
                 roomPosInGridCells.x + roomDiameter, 
                 roomPosInGridCells.y - roomDiameter, 
-                roomPosInGridCells.z)); // replace it with nothing
+                roomPosInGridCells.z), room); // replace it with nothing
         }
         
     }
@@ -166,32 +168,37 @@ public class RoomDrawer : MonoBehaviour
 
     }
 
-    private void BulkPlace(List<Vector3Int> cellPositions){
+    private void BulkPlace(List<Vector3Int> cellPositions, RoomObject room){
 
         foreach (Vector3Int cellPos in cellPositions){ // loop though all cell position passed in
-            PlaceTile(borderTilemap, borderTile, cellPos); // place border tile at cell pos
-            PlaceTile(insideTilemap, insideTile, cellPos); // place border tile at cell pos
+            PlaceTile(borderTilemap, insideTilemap, borderTile, insideTile, cellPos, room); // place border tile at cell pos
         }
     }
-    private void BulkPlace(List<Vector3Int> cellPositions, TileBase placeBorderTile, TileBase placeInsideTile){ // overload if inside tile is specified
+    private void BulkPlace(List<Vector3Int> cellPositions, TileBase placeBorderTile, RoomObject room, TileBase placeInsideTile){ // overload if inside tile is specified
 
         foreach (Vector3Int cellPos in cellPositions){ // loop though all cell position passed in
-            PlaceTile(borderTilemap, placeBorderTile, cellPos); // place border tile at cell pos
-            PlaceTile(insideTilemap, placeInsideTile, cellPos); // place border tile at cell pos
+            PlaceTile(borderTilemap, insideTilemap, placeBorderTile, placeInsideTile, cellPos, room); // place tile at cell pos
         }
     }
 
-    private void PlaceTile(Tilemap tilemap, TileBase tileBase, Vector3 position){
+    private void PlaceTile(Tilemap borderTilemap, Tilemap insideTilemap, TileBase borderTile, TileBase insideTile, Vector3Int cellPosition, RoomObject room){ 
 
-        Vector3Int postionInt = new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z)); // get postion in integers if vector3 is passed in
-        tilemap.SetTile(postionInt, tileBase); // set tile at postion to tileBase
+        borderTilemap.SetTile(cellPosition, borderTile); // set tile at postion to border
+        insideTilemap.SetTile(cellPosition, insideTile); // set tile at postion to inside
+        room.AddTileToList(cellPosition); // add tile to the rooms list
     }
-    private void PlaceTile(Tilemap tilemap, TileBase tileBase, Vector3Int cellPosition){ // overload if tile is already an int
 
-        tilemap.SetTile(cellPosition, tileBase); // set tile at postion to tileBase
-    }
-    private void DeleteTile(Vector3Int cellPosition){
+    private void DeleteTile(Vector3Int cellPosition, RoomObject room){
         borderTilemap.SetTile(cellPosition, null); // set the border to nothing
         insideTilemap.SetTile(cellPosition, null); // set the inside to nothing
+        room.RemoveTileFromList(cellPosition); // remove tile from the rooms list
+    }
+
+    private void DeleteTiles(List<Vector3Int> cellPositions, RoomObject room){
+        foreach (Vector3Int cellPosition in cellPositions){
+            borderTilemap.SetTile(cellPosition, null); // set the border to nothing
+            insideTilemap.SetTile(cellPosition, null); // set the inside to nothing
+        }
+        room.RemoveTilesFromList(cellPositions); // remove tiles from the rooms list
     }
 }
