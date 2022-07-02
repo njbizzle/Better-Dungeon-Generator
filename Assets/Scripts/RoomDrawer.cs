@@ -24,11 +24,15 @@ public class RoomDrawer : MonoBehaviour
 
     void Start()
     {
+        // assign refernces
+        gridLayout = FindObjectOfType<GridLayout>();
     }
 
     void Update()
     {
     }
+
+// ROOM PLACING METHODS
 
     public void PlaceRoomObjectTiles(RoomObject room){
 
@@ -48,8 +52,7 @@ public class RoomDrawer : MonoBehaviour
         bool roomBottomLeftCorner = cornerStatuses[2];
         bool roomBottomRightCorner = cornerStatuses[3];
 
-        Vector3Int roomPos = room.GetPosInInts(); // get postion of room in integers
-        Vector3Int roomPosInGridCells = gridLayout.WorldToCell(roomPos); // get room position in grid cells        
+        Vector3Int roomPosInGridCells = room.GetPosInGridCells(); // get room position in grid cells        
 
         wallLength = roomDiameter*2+1; // wall length
         doorLength = doorDiameter*2+1; // door length
@@ -168,6 +171,8 @@ public class RoomDrawer : MonoBehaviour
 
     }
 
+// TILEPLACING METHODS
+
     private void BulkPlace(List<Vector3Int> cellPositions, RoomObject room){
 
         foreach (Vector3Int cellPos in cellPositions){ // loop though all cell position passed in
@@ -201,4 +206,8 @@ public class RoomDrawer : MonoBehaviour
         }
         room.RemoveTilesFromList(cellPositions); // remove tiles from the rooms list
     }
+// GETTERS AND SETTERS
+
+    public int GetRoomDiameter(){return roomDiameter;}
+    public int GetDoorDiameter(){return doorDiameter;}
 }

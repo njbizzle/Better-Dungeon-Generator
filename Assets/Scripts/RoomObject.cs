@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class RoomObject : MonoBehaviour
+[CreateAssetMenu()]
+public class RoomObject : ScriptableObject
 {
     public enum WallStatus {closed, open, door}; // define a wallstatus varible type
+    [SerializeField] Vector3Int centerCellPosition;
 
     [Header("Walls")]
 
@@ -31,6 +33,23 @@ public class RoomObject : MonoBehaviour
     [Header("References")]
 
     [SerializeField] RoomDrawer roomDrawer;
+
+    public void init(Vector3Int pos, List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses){
+        centerCellPosition = pos; // update position
+        SetWallsAndCorners(wallStatuses, cornerStatuses); // call function to change the walls and corners
+    }
+
+    public void SetWallsAndCorners(List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses){
+        topWall = wallStatuses[0]; // set wall values
+        bottomWall = wallStatuses[1];
+        leftWall = wallStatuses[2];
+        rightWall = wallStatuses[3];
+
+        topLeftCorner = cornerStatuses[0];
+        topRightCorner = cornerStatuses[1];
+        bottomLeftCorner = cornerStatuses[2];
+        bottomRightCorner = cornerStatuses[3];
+    }
 
     void Start()
     {
@@ -59,13 +78,8 @@ public class RoomObject : MonoBehaviour
         return cornerStatuses; // return created array 
     }
 
-    public Vector3Int GetPosInInts(){
-        Vector3Int postionInt = new Vector3Int(
-            Mathf.RoundToInt(transform.position.x), // get postion in integers
-            Mathf.RoundToInt(transform.position.y), 
-            Mathf.RoundToInt(transform.position.z));
-
-        return postionInt; // returns created vector3int 
+    public Vector3Int GetPosInGridCells(){
+        return centerCellPosition; // returns position
     }
     public List<Vector3Int> GetTilePoints(){
         return tilePoints;
@@ -80,6 +94,8 @@ public class RoomObject : MonoBehaviour
     }
     
     public void RemoveTilesFromList(List<Vector3Int> tilePoses){
-        tilePoints = tilePoints.Except(tilePoses).ToList();
+        tilePoints = tilePoints.Except(tilePoses).ToList(); // subtract the lists
+        // someone on unity discord said this if its too laggy, too lazy to do rn so ill do it if i have optomizing problems. but apperently im not lazy enough to write this stupidly long comment.
+        // unless the ordering of the list doesnt matter, in that case you could do a simple find, swap with last element, then remove the last element
     }
 }
