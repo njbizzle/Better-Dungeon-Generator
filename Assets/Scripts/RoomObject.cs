@@ -34,9 +34,12 @@ public class RoomObject : ScriptableObject
 
     [SerializeField] RoomDrawer roomDrawer;
 
-    public void init(Vector3Int pos, List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses){
+    public void init(Vector3Int pos, List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses, bool disableSpawn, bool disableShow){
         centerCellPosition = pos; // update position
         SetWallsAndCorners(wallStatuses, cornerStatuses); // call function to change the walls and corners
+
+        if(!disableShow){
+        }
     }
 
     public void SetWallsAndCorners(List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses){
@@ -64,7 +67,9 @@ public class RoomObject : ScriptableObject
         }
     }
 
-    public WallStatus[] GetWallStatus(){
+// GETTERS AND SETTERS
+
+    public WallStatus[] GetWallsStatus(){
         WallStatus[] wallStatuses = new WallStatus[] 
             {topWall, bottomWall, leftWall, rightWall}; // make array of wall statuses
 

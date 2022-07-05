@@ -38,7 +38,7 @@ public class RoomDrawer : MonoBehaviour
 
         // --get info on room--
 
-        RoomObject.WallStatus[] wallStatuses = room.GetWallStatus(); // get array of the statuses of the differnt wall with type wallstatus
+        RoomObject.WallStatus[] wallStatuses = room.GetWallsStatus(); // get array of the statuses of the differnt wall with type wallstatus
         
         RoomObject.WallStatus roomTopWall = wallStatuses[0]; // split array into differnt variables
         RoomObject.WallStatus roomBottomWall = wallStatuses[1];

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbf525b522734447a3a75946c1585d6, type: 3}
+  m_Name: StartingRoom
+  m_EditorClassIdentifier: 
+  centerCellPosition: {x: 0, y: 0, z: 0}
+  topWall: 1
+  bottomWall: 0
+  leftWall: 1
+  rightWall: 0
+  topLeftCorner: 1
+  topRightCorner: 1
+  bottomLeftCorner: 1
+  bottomRightCorner: 1
+  drawRoom: 0
+  tilePoints: []
+  roomDrawer: {fileID: 0}

@@ -20,8 +20,6 @@ public class RoomManager : MonoBehaviour
         // assign refernces
         gridLayout = FindObjectOfType<GridLayout>();
         roomDrawer = FindObjectOfType<RoomDrawer>();
-
-        Debug.Log(gridLayout.cellSize);
     }
 
     void Update()

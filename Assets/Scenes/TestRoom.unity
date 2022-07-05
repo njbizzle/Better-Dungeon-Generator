@@ -652,7 +652,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hardStop: 0
   hardStopMax: 0
-  gridLayout: {fileID: 936919744}
+  startingRoom: {fileID: 11400000, guid: e764c5acd1825e747b79b5108702aada, type: 2}
+  gridLayout: {fileID: 0}
+  dungeonLogic: {fileID: 0}
+  roomManager: {fileID: 0}
 --- !u!4 &811270421
 Transform:
   m_ObjectHideFlags: 0
@@ -759,6 +762,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomBorder: 0
+  gridLayout: {fileID: 0}
+  roomDrawer: {fileID: 0}
 --- !u!1 &1266597572
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +793,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c94732e24648c944a4240de0f8d05ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generationMode: 0
+  generationModes: 
+  testRoom: {fileID: 11400000, guid: e764c5acd1825e747b79b5108702aada, type: 2}
+  roomObjectCreator: {fileID: 0}
 --- !u!4 &1266597574
 Transform:
   m_ObjectHideFlags: 0
@@ -838,7 +847,7 @@ MonoBehaviour:
   insideTile: {fileID: 11400000, guid: 8ce71b408ffca394c94cfe34ad329af4, type: 2}
   roomDiameter: 5
   doorDiameter: 1
-  gridLayout: {fileID: 936919744}
+  gridLayout: {fileID: 0}
 --- !u!4 &1465586962
 Transform:
   m_ObjectHideFlags: 0
