@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
 
-    [SerializeField] RoomObject[][] roomMatrix; // make an array of arrays of rooms
+    [SerializeField] RoomObject[,] roomMatrix; // define the array
 
     [SerializeField] int roomBorder; // cant have negative indexes so if it is, then add this to the absoulute value
 
@@ -14,12 +14,20 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] GridLayout gridLayout;
     [SerializeField] RoomDrawer roomDrawer;
-    
-    void Start()
+
+    [SerializeField] int currentRoomID = 0;
+    void Awake()
     {
         // assign refernces
         gridLayout = FindObjectOfType<GridLayout>();
         roomDrawer = FindObjectOfType<RoomDrawer>();
+
+        roomMatrix = new RoomObject[roomBorder*2, roomBorder*2]; // define the size of the room matrix
+    }
+
+    void Start()
+    {
+
     }
 
     void Update()
@@ -27,26 +35,26 @@ public class RoomManager : MonoBehaviour
         
     }
 
-    public void AddRoom(RoomObject room, int xIndex, int yIndex){
-        if (xIndex < 0){ // if less than 0
-            xIndex = Mathf.Abs(xIndex + roomBorder); // manages negative indexes x
+    public void AddRoom(RoomObject room, Vector3Int roomPos){
+        if (roomPos.x < 0){ // if less than 0
+            roomPos.x = Mathf.Abs(roomPos.x + roomBorder); // manages negative indexes x
         }
-        if (yIndex < 0){ // if less than 0
-            yIndex = Mathf.Abs(yIndex + roomBorder); // manages negative indexes y
+        if (roomPos.y < 0){ // if less than 0
+            roomPos.y = Mathf.Abs(roomPos.y + roomBorder); // manages negative indexes y
         }
-        roomMatrix[xIndex][yIndex] = room; // set the room at the pos to that room
+        roomMatrix[roomPos.x, roomPos.y] = room; // set the room at the pos to that room
     }
 
-    public RoomObject GetRoom(int xIndex, int yIndex){
-        if (xIndex < 0){ // if less than 0
-            xIndex = Mathf.Abs(xIndex + roomBorder); // manages negative indexes x
+    public RoomObject GetRoom(Vector3Int roomPos){
+        if (roomPos.x < 0){ // if less than 0
+            roomPos.x = Mathf.Abs(roomPos.x + roomBorder); // manages negative indexes x
         }
-        if (yIndex < 0){ // if less than 0
-            yIndex = Mathf.Abs(yIndex + roomBorder); // manages negative indexes y
+        if (roomPos.y < 0){ // if less than 0
+            roomPos.y = Mathf.Abs(roomPos.y + roomBorder); // manages negative indexes y
         }
         
         try{ // tries to do stuff
-            RoomObject returnRoom = roomMatrix[xIndex][yIndex]; // stores the room at that pos
+            RoomObject returnRoom = roomMatrix[roomPos.x, roomPos.y]; // stores the room at that pos
             return returnRoom; //  return the room
         }
         catch{ // if there is an error, meaning no room, return null
@@ -54,11 +62,17 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    
     public Vector3Int GridCellToMatrixPos(Vector3Int gridCellPos){
         int roomDiameter = roomDrawer.GetRoomDiameter(); // get the room diameter
         return new Vector3Int( // divide the values and return the new vector
             gridCellPos.x/roomDiameter, 
             gridCellPos.y/roomDiameter, 
             gridCellPos.z);
+    }
+
+    public int MakeRoomID(){
+        currentRoomID++; //  get the next room ID (to avoid overlap)
+        return currentRoomID; // return the current room ID
     }
 }

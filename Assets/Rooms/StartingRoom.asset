@@ -10,17 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cbf525b522734447a3a75946c1585d6, type: 3}
-  m_Name: StartingRoom
+  m_Name: 0, 0
   m_EditorClassIdentifier: 
   centerCellPosition: {x: 0, y: 0, z: 0}
+  roomID: 0
   topWall: 1
   bottomWall: 0
   leftWall: 1
-  rightWall: 0
+  rightWall: 2
   topLeftCorner: 1
   topRightCorner: 1
   bottomLeftCorner: 1
   bottomRightCorner: 1
-  drawRoom: 0
-  tilePoints: []
-  roomDrawer: {fileID: 0}
+  drawRoom: 1
+  tilePoints:
+  - {x: -2, y: -2, z: 0}
+  - {x: -1, y: -2, z: 0}
+  - {x: 0, y: -2, z: 0}
+  - {x: 1, y: -2, z: 0}
+  - {x: 2, y: -2, z: 0}
+  - {x: 2, y: -2, z: 0}
+  - {x: 2, y: -1, z: 0}
+  - {x: 2, y: 1, z: 0}
+  - {x: 2, y: 2, z: 0}
+  - {x: -2, y: 2, z: 0}
+  - {x: 2, y: 2, z: 0}
+  - {x: -2, y: -2, z: 0}
+  - {x: 2, y: -2, z: 0}

@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 40
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -393,30 +393,30 @@ Tilemap:
       e33: 0
   - m_RefCount: 0
     m_Data:
-      e00: -4.82775e-26
+      e00: -6.9376187e+22
       e01: 0
-      e02: -8.7622175e+19
-      e03: -8.7622175e+19
-      e10: 8.27e-43
+      e02: -4.7500076
+      e03: -4.7500076
+      e10: 9.14e-43
       e11: 0
-      e12: 8.27e-43
-      e13: 8.27e-43
-      e20: -1.182923e+30
+      e12: 9.14e-43
+      e13: 9.14e-43
+      e20: 2.60944e+12
       e21: 1e-45
-      e22: 3.0110305e-19
-      e23: 2.033657
+      e22: 5.079433e-29
+      e23: 4.677556e-10
       e30: 4.5904e-41
       e31: 0
-      e32: 8.28e-43
-      e33: 8.31e-43
+      e32: 9.15e-43
+      e33: 9.18e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 3.4223e-41, g: 3.4223e-41, b: 3.4223e-41, a: 3.4223e-41}
+    m_Data: {r: 3.4217e-41, g: 3.4217e-41, b: 3.4217e-41, a: 3.4217e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -7, y: -8, z: 0}
-  m_Size: {x: 16, y: 15, z: 1}
+  m_Origin: {x: -17, y: -13, z: 0}
+  m_Size: {x: 26, y: 20, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -630,32 +630,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 811270421}
-  - component: {fileID: 811270420}
+  - component: {fileID: 811270422}
   m_Layer: 0
-  m_Name: RoomObjectCreator
+  m_Name: DungeonLoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &811270420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811270419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a890152d71e49d42ab8ac9812a7f0df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hardStop: 0
-  hardStopMax: 0
-  startingRoom: {fileID: 11400000, guid: e764c5acd1825e747b79b5108702aada, type: 2}
-  gridLayout: {fileID: 0}
-  dungeonLogic: {fileID: 0}
-  roomManager: {fileID: 0}
 --- !u!4 &811270421
 Transform:
   m_ObjectHideFlags: 0
@@ -671,6 +653,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &811270422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811270419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29243446bb709f4faa98b77400632f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hardStop: 0
+  hardStopMax: 10
+  startingRoom: {fileID: 11400000, guid: e764c5acd1825e747b79b5108702aada, type: 2}
+  gridLayout: {fileID: 936919744}
+  dungeonLogic: {fileID: 1266597573}
+  roomManager: {fileID: 1115041856}
+  roomDrawer: {fileID: 1465586961}
+  generationStepper: {fileID: 0}
 --- !u!1 &936919743
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,9 +763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d05054f1d0027946bd2c802e2a3510c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomBorder: 0
-  gridLayout: {fileID: 0}
-  roomDrawer: {fileID: 0}
+  roomBorder: 100
+  gridLayout: {fileID: 936919744}
+  roomDrawer: {fileID: 1465586961}
+  currentRoomID: 0
 --- !u!1 &1266597572
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +799,12 @@ MonoBehaviour:
   generationMode: 0
   generationModes: 
   testRoom: {fileID: 11400000, guid: e764c5acd1825e747b79b5108702aada, type: 2}
-  roomObjectCreator: {fileID: 0}
+  testWallStatuses: 00000000000000000000000000000000
+  testCornerStatuses: 01010101
+  gridLayout: {fileID: 0}
+  dungeonLogic: {fileID: 0}
+  roomManager: {fileID: 0}
+  roomDrawer: {fileID: 1465586961}
 --- !u!4 &1266597574
 Transform:
   m_ObjectHideFlags: 0
@@ -811,6 +819,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1332460094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1332460096}
+  - component: {fileID: 1332460095}
+  m_Layer: 0
+  m_Name: GenerationStepper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1332460095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332460094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dea57f4f486db44e8e8620bd3a37fed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1332460096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332460094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.4972109, y: 3.2240236, z: 0.64443177}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1465586960
 GameObject:
@@ -845,9 +897,9 @@ MonoBehaviour:
   insideTilemap: {fileID: 153096812}
   borderTile: {fileID: 11400000, guid: 721c620d2ab450a498efb7454f6a4803, type: 2}
   insideTile: {fileID: 11400000, guid: 8ce71b408ffca394c94cfe34ad329af4, type: 2}
-  roomDiameter: 5
-  doorDiameter: 1
-  gridLayout: {fileID: 0}
+  roomDiameter: 2
+  doorDiameter: 0
+  gridLayout: {fileID: 936919744}
 --- !u!4 &1465586962
 Transform:
   m_ObjectHideFlags: 0

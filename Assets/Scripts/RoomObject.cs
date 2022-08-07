@@ -8,6 +8,7 @@ public class RoomObject : ScriptableObject
 {
     public enum WallStatus {closed, open, door}; // define a wallstatus varible type
     [SerializeField] Vector3Int centerCellPosition;
+    [SerializeField] int roomID;
 
     [Header("Walls")]
 
@@ -29,18 +30,15 @@ public class RoomObject : ScriptableObject
     [Header("Tile Drawn")]
     [SerializeField] List<Vector3Int> tilePoints; // stores postions of all tiles associated with the room
 
-    // references
-    [Header("References")]
+// INIT METHODS
 
-    [SerializeField] RoomDrawer roomDrawer;
-
-    public void init(Vector3Int pos, List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses, bool disableSpawn, bool disableShow){
+    public void init(Vector3Int pos, List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses, int roomId){
+        tilePoints = new List<Vector3Int>();
         centerCellPosition = pos; // update position
         SetWallsAndCorners(wallStatuses, cornerStatuses); // call function to change the walls and corners
-
-        if(!disableShow){
-        }
+        roomID = roomId; // set room ID
     }
+
 
     public void SetWallsAndCorners(List<RoomObject.WallStatus> wallStatuses, List<bool> cornerStatuses){
         topWall = wallStatuses[0]; // set wall values
@@ -54,46 +52,38 @@ public class RoomObject : ScriptableObject
         bottomRightCorner = cornerStatuses[3];
     }
 
-    void Start()
-    {
-        roomDrawer = FindObjectOfType<RoomDrawer>();
-    }
-
-    void Update()
-    {
-        if (drawRoom) {
-            roomDrawer.PlaceRoomObjectTiles(this); // pass in self to draw in tiles to the screen
-            drawRoom = false; // disable it, like a button
-        }
-    }
-
 // GETTERS AND SETTERS
-
-    public WallStatus[] GetWallsStatus(){
-        WallStatus[] wallStatuses = new WallStatus[] 
+    
+    public List<WallStatus> GetWallsStatus(){
+        List<WallStatus> wallStatuses = new List<WallStatus> 
             {topWall, bottomWall, leftWall, rightWall}; // make array of wall statuses
 
         return wallStatuses; // return created array
     }
 
-    public bool[] GetCornersStatus(){
-        bool[] cornerStatuses = new bool[] 
+    public List<bool> GetCornersStatus(){
+        List<bool> cornerStatuses = new List<bool>
             {topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner}; // make array of corner bools
 
         return cornerStatuses; // return created array 
     }
 
     public Vector3Int GetPosInGridCells(){
-        return centerCellPosition; // returns position
+        return centerCellPosition;
     }
+
     public List<Vector3Int> GetTilePoints(){
         return tilePoints;
+    }
+    
+    public int GetRoomID(){
+        return roomID;
     }
 
     public void AddTileToList(Vector3Int tilePos){
         tilePoints.Add(tilePos);
     }
-    
+
     public void RemoveTileFromList(Vector3Int tilePos){
         tilePoints.Remove(tilePos);
     }
